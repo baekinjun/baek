@@ -1,0 +1,294 @@
+class solution:
+  def addtnm(self,l1:Listnode, l2 :Listnode,c=0):
+    hap=l1.val+l2.val+c
+    c=hap//10
+    answer=ListNode(hap%10)
+
+    if l1.next!=None or l2.next!=None or c!=0:
+      if l1.next==None:
+        l1.next=ListNode(0)
+      if l2.next==None:
+        l2.next=ListNode(0)
+      answer.next=self.addtnm(l1.next,l2.next,c)
+    return answer
+  def addtnm2(self,l1:ListNode,l2:ListNode):
+    s1,s2=[],[]
+
+    while l1:
+      s1.append(l1)
+      l1=l1.next
+    while l2:
+      s2.append(l2)
+      l2=l2.next
+    
+    s=0
+    dummy=ListNode(0)
+
+    while s1 or s2 or s:
+      if s1:
+        s+=s1.pop().val
+      if s2:
+        s+=s2.pop().val
+      curr=ListNode(s%10)
+      curr.next=dummy.next
+      dummy.next=curr
+      s//=10
+    return dummy.next
+    
+     def addBinary(self, a: str, b: str) -> str:
+        return bin(int(a,2)+int(b,2))[2:]
+     
+         def inorderTraversal(self, root: TreeNode) -> List[int]:
+      answer=[]
+      self.inorderTraversalsub(root,answer)
+      return answer
+    def inorderTraversalsub(self,node,answer):
+      if node:
+        if node.left:
+          self.inorderTraversalsub(node.left,answer)
+        answer.append(node.val)
+        if node.right:
+          self.inorderTraversalsub(node.right,answer)
+
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+      answer=[]
+      self.preorderTraversalsub(root,answer)
+      return answer
+    def preorderTraversalsub(self,node,answer):
+      if node:
+        answer.append(node.val)
+        if node.left:
+          self.preorderTraversalsub(node.left,answer)
+        if node.right:
+          self.preorderTraversalsub(node.right,answer)
+    
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        res=[]
+        self.postorderTraversalsub(root,res)
+        return res
+    def postorderTraversalsub(self,node,res):
+        if node:
+            if node.left:
+                self.postorderTraversalsub(node.left,res)
+            if node.right:
+                self.postorderTraversalsub(node.right,res)
+            res.append(node.val)
+                
+    def insertionSortList(self, head: ListNode) -> ListNode:
+      if not head or not head.next:
+        return head
+
+      dummy=ListNode(0)
+      dummy.next=head
+      p2=head
+
+      while p2.next:
+        if p2.val>p2.next.val:
+          p1=dummy
+          while p2.next.val>=p1.next.val:
+            p1=p1.next
+          t=p2.next
+          p2.next=p2.next.next
+          t.next=p1.next
+          p1.next=t
+
+        else:
+          p2=p2.next
+      return dummy.next
+    def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
+      leaf1=[]
+      leaf2=[]
+
+      self.leafsimilarsub(root1,leaf1)
+      self.leafsimilarsub(root2,leaf2)
+
+      return leaf1==leaf2
+
+    def leafsimilarsub(self,root,leaf):
+      if not root:
+        return
+      self.leafsimilarsub(root.left,leaf)
+
+      if not root.left and not root.right:
+        leaf.append(root.val)
+      self.leafsimilarsub(root.right,leaf)
+      
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        result=[]
+        best=[]
+        if len(s)==1:
+            return 1
+        for num,i in enumerate(s):
+            if i in result:
+                index = result.index(i)
+                result=result[index+1:]
+            result.append(i)
+            
+            if len(best)<len(result):
+                best=list(result)
+        return len(best)
+        
+         def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.data=[]
+
+    def push(self, x: int) -> None:
+        curr=self.getMin()
+        if curr==None or x<curr:
+          curr=x
+        self.data.append((x,curr))
+
+    def pop(self) -> None:
+        self.data.pop()
+
+    def top(self) -> int:
+        return self.data[len(self.data)-1][0]
+
+    def getMin(self) -> int:
+      if len(self.data)==0:
+        return None
+      else:
+        return self.data[len(self.data)-1][1]
+
+class maxStack:
+  def __init__(self):
+    self.data=[]
+    
+
+  def push(self,x):
+    self.data.insert(0,x)
+
+
+  def pop(self):
+    self.data.pop(0)
+
+  def top(self):
+    return self.data[0]
+  
+  def peekmax(self):
+    return max(self.data)
+ 
+    
+
+  def popmax(self):
+    res=self.data.peekmax()
+    self.data.remove(res)
+    return res
+    
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+      answer=[]
+      if not root:
+        return answer
+      answer.append(root.val)
+      for i in root.children:
+        answer.extend(self.preorder(i))
+      return answer
+
+ 
+
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+      res=[]
+      if not root:
+        return res
+      for i in root.children:
+        res.extend(self.postorder(i))
+      res.append(root.val)
+
+      return res
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+      y=str(x)[::-1]
+      z=str(x)
+      if y==z:
+        return True
+      else:
+        return False
+        
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+      if len(nums)==0:
+        return 0
+      b=1
+
+      for i in range(1,len(nums)):
+        if nums[i]!=nums[i-1]:
+          nums[b]=nums[i]
+          b+=1
+      return b
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+      prev,curr=None,head
+
+      while curr:
+        curr.next,prev,curr=prev,curr,curr.next
+      return prev
+
+    def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+      dummy=ListNode(0)
+      dummy.next=head
+
+      prev,curr=dummy,head
+
+      for  i in range(m-1):
+        prev=prev.next
+        curr=curr.next
+      for j in range(n-m):
+        temp=curr.next
+        curr.next=temp.next
+        temp.next=prev.next
+        prev.next=temp
+      return dummy.next
+      
+      
+      
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        res=[]
+        if k==0:
+            return []
+        elif len(nums)==1:
+            return nums
+        elif k==1:
+            return nums
+            
+       
+        else:
+            for i in range(len(nums)-1):
+                if len(nums[i:k+i])==k:
+                    res.append(nums[i:k+i])
+            return res
+       
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+      if nums==[]:
+        return []
+      
+      start=0
+      end=len(nums)-1
+      i=0
+
+      while i<=end:
+        if nums[i]==2:
+          nums[i],nums[end]=nums[end],nums[i]
+          end-=1
+        elif nums[i]==0:
+          nums[i],nums[start]=nums[start],nums[i]
+          start+=1
+          i+=1
+        else:
+          i+=1
+      return nums
